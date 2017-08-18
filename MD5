@@ -1,0 +1,15 @@
+1dc4304cec1b345689c1c41c80479150 *DESCRIPTION
+796fc2bab2eea96b756c13cd4364258f *NAMESPACE
+0213435510fb2c64dc37eb9e5e2cc26b *R/RcppExports.R
+5cde539c8a799af80924e2782979b0b7 *R/mainODPC.R
+c3f3a7866b136248f7fe749c8165c87a *R/methodsODPC.R
+4120d57897bec7cee02ffa7ae2aece83 *man/components.odpcs.Rd
+55a2ffb9721427c8b138ece2fa07ddbe *man/fitted.odpcs.Rd
+3c3dcd78069b4a3028156211e417d537 *man/forecast.odpcs.Rd
+d8e28cdf298324c6dab52352ce6e0b23 *man/odpc-package.Rd
+4cac22f956f8ee089691c46e7cb91f87 *man/odpc.Rd
+75565af10f7465f2c4412b9374a813ac *man/plot.odpc.Rd
+adbe6849be6f3d9410a656cd13091c6b *src/Makevars
+c41c630202c05f48f17bd627495d393f *src/RcppExports.cpp
+4fd90e7fa1ecd9bc9d9847566441f2fd *src/odpc_auxfunc.cpp
+f4075bcadd7216637a88686b8d60275a *src/registerDynamicSymbols.c
