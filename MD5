@@ -1,12 +1,12 @@
-601de863ca4ebf73b98a781164667049 *DESCRIPTION
+b580d4389a7b0f9b5525348af63e7b0e *DESCRIPTION
 de57d064382f7ac83ec644e7df7d5f97 *NAMESPACE
-00c55d6dece30d098b9e7e2e69465fd2 *NEWS
+2b3689db3d24ee2a2a4d0e86a81a5edf *NEWS
 b20b370598082a6230353d13617c0a31 *R/RcppExports.R
 22562c6d762a1b9d8b022d5f54931b78 *R/mainODPC.R
 0cc0c4099f51d70711b89dd6401fd2c9 *R/methodsODPC.R
-1efc7a4685e615a37186f7a1c31f5855 *cleanup
-23ed3e1940bdaf108cea3a76bb5ab5f3 *configure
-28c5af3c5fd7732bebce72d68b491805 *configure.ac
+9040a4ef73b48856d1d935f9c5814f62 *cleanup
+5171581d905e307ec2d4b7e2ef977666 *configure
+7ab3f7f9ab5bfa1cdbbf1e22c193fd6b *configure.ac
 e5ce541c21cd81c6e9f39a854c63cbee *configure.win
 1d89ca890e82806732dddc6dc9423cd8 *man/components.odpcs.Rd
 af64a046cbc3dc27a4cfdc03364d388e *man/crit.odpc.Rd
@@ -15,7 +15,7 @@ af64a046cbc3dc27a4cfdc03364d388e *man/crit.odpc.Rd
 39861ca0cde0a026298097ba9fd6f402 *man/forecast.odpcs.Rd
 9e4e7de6769a1b6b7b0017b798ea7942 *man/odpc.Rd
 825f6b9dfa62e571628e3b4c78ea3bcc *man/plot.odpc.Rd
-1bf41309795d8ddedcbbc89f124311fa *src/Makevars.in
+636120de66aa7e4b4e9d048aef8cfd04 *src/Makevars.in
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars.win
 ad154da007fbad3e4fa6b930d85ec9b8 *src/RcppExports.cpp
 1b0bbbd1f17035127f7af748776ef2af *src/autoconfig.h.in
