@@ -7,7 +7,7 @@ odpc <- function(Z, ks, method, tol = 1e-04, niter_max = 500) {
   # dynamic principal component (k1), second column is the number of lags of the dynamic principal
   # component used to reconstruct the series (k2). If ks is a vector, its i-th entry 
   # is taken as both k1 and k2 for the i-th component
-  # method: Algorithm used. Options are 'ALS' or 'mix'. See details below.
+  # method: Algorithm used. Options are 'ALS', 'mix' or 'gradient'. See details below.
   # niter_max : maximum number of iterations. Default is 500
   # tol : tolerance parameter to declare convergence. Default is 1e-4
   
@@ -53,21 +53,21 @@ odpc <- function(Z, ks, method, tol = 1e-04, niter_max = 500) {
     stop("For each component, either k1 or k2 should be positive")
   }
   if (!missing(method)) {
-    if (!(method %in% c('ALS', 'mix'))) {
-      stop("method should be ALS or mix")
+    if (!(method %in% c('ALS', 'mix', 'gradient'))) {
+      stop("method should be ALS, mix or gradient")
     }
   }
   
   num_comp <- nrow(ks)
   
   if (missing(method)){
-    if (ncol(Z) > 40){
-      method <- 2 # Use mix method for moderately fat data sets
+    if (ncol(Z) > 10){
+      method <- 3 # Use gradient method for moderately fat data sets
     } else {
       method <- 1
     }
   } else {
-    method <- switch(method, 'ALS' = 1, 'mix' = 2)  
+    method <- switch(method, 'ALS' = 1, 'mix' = 2, 'gradient' = 3)  
   }
   
   output <- vector('list', num_comp)
@@ -113,7 +113,7 @@ odpc <- function(Z, ks, method, tol = 1e-04, niter_max = 500) {
 #' @param window_size The size of the rolling window used to estimate the forecasting error.
 #' @param ncores_k Number of cores to parallelise over \code{k_list}.
 #' @param ncores_w Number of cores to parallelise over the rolling window (nested in \code{k_list}).
-#' @param method A string specifying the algorithm used. Options are 'ALS' or 'mix'. See details in \code{\link{odpc}}.
+#' @param method A string specifying the algorithm used. Options are 'ALS', 'mix' or 'gradient'. See details in \code{\link{odpc}}.
 #' @param tol Relative precision. Default is 1e-4.
 #' @param niter_max Integer. Maximum number of iterations. Default is 500.
 #' @param train_tol Relative precision used in cross-validation. Default is 1e-2.
@@ -208,19 +208,19 @@ cv.odpc <- function(Z, h, k_list = 1:5, max_num_comp = 5, window_size, ncores_k=
     stop("niter_max should be a positive integer")
   }
   if (!missing(method)) {
-    if (!(method %in% c('ALS', 'mix'))) {
-      stop("method should be ALS or mix")
+    if (!(method %in% c('ALS', 'mix', 'gradient'))) {
+      stop("method should be ALS, mix or gradient")
     }
   }
   
   if (missing(method)){
-    if (ncol(Z) > 40){
-      method <- 2 # Use mix method for moderately fat data sets
+    if (ncol(Z) > 10){
+      method <- 3 # Use gradient method for moderately fat data sets
     } else {
       method <- 1
     }
   } else {
-    method <- switch(method, 'ALS' = 1, 'mix' = 2)  
+    method <- switch(method, 'ALS' = 1, 'mix' = 2, 'gradient' = 3)  
   }
   if (missing(window_size)){
     window_size <- floor(0.2 * nrow(Z))
@@ -283,7 +283,7 @@ cv.odpc <- function(Z, h, k_list = 1:5, max_num_comp = 5, window_size, ncores_k=
       old_best_mse <- new_best_mse
     }
   }
-  methods <- c('ALS', 'mix')
+  methods <- c('ALS', 'mix', 'gradient')
   method <- methods[method]
   output <- odpc(Z=Z, ks=as.numeric(ks), method=method, tol=tol, niter_max=niter_max)
   on.exit(stopCluster(cl))
@@ -308,7 +308,7 @@ grid_odpc <- function(data_field, response_field, k_list, k_maxs, num_comp, wind
 #' @param k_list List of values of k to choose from.
 #' @param max_num_comp Maximum possible number of components to compute.
 #' @param ncores Number of cores to use in parallel computations.
-#' @param method A string specifying the algorithm used. Options are 'ALS' or 'mix'. See details in \code{\link{odpc}}.
+#' @param method A string specifying the algorithm used. Options are 'ALS', 'mix' or 'gradient'. See details in \code{\link{odpc}}.
 #' @param tol Relative precision. Default is 1e-4.
 #' @param niter_max Integer. Maximum number of iterations. Default is 500.
 
@@ -401,19 +401,19 @@ crit.odpc <- function(Z, k_list = 1:5, max_num_comp = 5, ncores = 1, method, tol
     stop("niter_max should be a positive integer")
   }
   if (!missing(method)) {
-    if (!(method %in% c('ALS', 'mix'))) {
-      stop("method should be ALS or mix")
+    if (!(method %in% c('ALS', 'mix', 'gradient'))) {
+      stop("method should be ALS, mix or gradient")
     }
   }
   
   if (missing(method)){
-    if (ncol(Z) > 40){
-      method <- 2 # Use mix method for moderately fat data sets
+    if (ncol(Z) > 10){
+      method <- 3 # Use gradient method for moderately fat data sets
     } else {
       method <- 1
     }
   } else {
-    method <- switch(method, 'ALS' = 1, 'mix' = 2)  
+    method <- switch(method, 'ALS' = 1, 'mix' = 2, 'gradient' = 3)  
   }
   
   ks <- c() # List of estimated optimal k for each component

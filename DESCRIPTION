@@ -1,8 +1,8 @@
 Package: odpc
 Type: Package
 Title: One-Sided Dynamic Principal Components
-Version: 2.0.2
-Date: 2020-01-31
+Version: 2.0.3
+Date: 2020-06-30
 Author: Daniel Peña <daniel.pena@uc3m.es>,
     Ezequiel Smucler <ezequiels.90@gmail.com>,
     Victor Yohai <vyohai@dm.uba.ar>
@@ -23,7 +23,7 @@ Suggests: testthat
 Depends: R (>= 3.3.0)
 NeedsCompilation: yes
 Encoding: UTF-8
-RoxygenNote: 6.0.1
-Packaged: 2020-02-02 18:02:11 UTC; ezequiel
+RoxygenNote: 7.1.0
+Packaged: 2020-06-30 14:01:27 UTC; esmucler
 Repository: CRAN
-Date/Publication: 2020-02-02 18:20:02 UTC
+Date/Publication: 2020-06-30 17:00:02 UTC
