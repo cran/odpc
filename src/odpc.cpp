@@ -4,24 +4,9 @@ using namespace arma;
 // [[Rcpp::depends(RcppArmadillo)]]
 #include "config.h"
 #include "getMatrices.h"
+#include "sparseAux.h"
 #include "updateFunctions.h"
-
-// [[Rcpp::export]]
-double getMSE(const arma::mat & resp,
-              const arma::mat & Fitted){
-  // Get MSE of the reconstruction of resp by Fitted
-  // INPUT
-  // resp: matrix ot be reconstructed
-  // Fitted: matrix of fitted values
-  // OUTPUT
-  // mse: mean squared error
-  int N = resp.n_rows;
-  int m = resp.n_cols;
-  double mse = accu(pow(resp - Fitted, 2));
-  mse /= (N * m);
-  return(mse);
-}
-
+#include "miscAux.h"
 
 // [[Rcpp::export]]
 arma::field<arma::mat> odpc_priv(const arma::mat & Z,
@@ -141,7 +126,7 @@ arma::field<arma::mat> odpc_priv(const arma::mat & Z,
     double mse_ini = mse;
     while (niter < niter_max and criter > tol){
       niter += 1;
-      getVecAMatD_grad(resp, matF, ident, C, one, WC, a, alpha, B, D, vecresp, W);
+      getVecAMatD_grad(resp, matF, ident, C, one, -1, WC, a, alpha, B, D, vecresp, W);
       getMatrixF(Z, k1, k2, k_tot_max, a, matF);
       Fitted = matF * D;
       mse = getMSE(resp, Fitted);
@@ -158,7 +143,6 @@ arma::field<arma::mat> odpc_priv(const arma::mat & Z,
   if (niter < niter_max) {
     conv = true;
   }
-
   if (k2 > 0) {
     fout(span(0, k2 - 1)) = matF(span(0, k2 - 1), k2 + 1);
     fout(span(k2, N - (k_tot_max - k2) - 1)) = matF.col(1);

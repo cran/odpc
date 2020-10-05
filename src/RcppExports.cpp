@@ -6,6 +6,20 @@
 
 using namespace Rcpp;
 
+// getMatrixZj0
+arma::mat getMatrixZj0(const arma::mat& Z, const int& k1, const int& k_tot, const int& j);
+RcppExport SEXP _odpc_getMatrixZj0(SEXP ZSEXP, SEXP k1SEXP, SEXP k_totSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int& >::type k1(k1SEXP);
+    Rcpp::traits::input_parameter< const int& >::type k_tot(k_totSEXP);
+    Rcpp::traits::input_parameter< const int& >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(getMatrixZj0(Z, k1, k_tot, j));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getMatrixFore
 arma::mat getMatrixFore(const arma::vec& f, const int& k2, const int& h);
 RcppExport SEXP _odpc_getMatrixFore(SEXP fSEXP, SEXP k2SEXP, SEXP hSEXP) {
@@ -44,6 +58,21 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const int& >::type k2(k2SEXP);
     Rcpp::traits::input_parameter< const arma::uword& >::type num_comp(num_compSEXP);
     rcpp_result_gen = Rcpp::wrap(getFini_forecast(Z, resp, k1, k2, num_comp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getMatrixF_sparse_forecast
+arma::mat getMatrixF_sparse_forecast(const arma::mat& Z, const int& k1, const int& k2, const int& k_tot, const arma::vec& a);
+RcppExport SEXP _odpc_getMatrixF_sparse_forecast(SEXP ZSEXP, SEXP k1SEXP, SEXP k2SEXP, SEXP k_totSEXP, SEXP aSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int& >::type k1(k1SEXP);
+    Rcpp::traits::input_parameter< const int& >::type k2(k2SEXP);
+    Rcpp::traits::input_parameter< const int& >::type k_tot(k_totSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type a(aSEXP);
+    rcpp_result_gen = Rcpp::wrap(getMatrixF_sparse_forecast(Z, k1, k2, k_tot, a));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -100,14 +129,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sparse_odpc_priv
+arma::field<arma::field<arma::mat>> sparse_odpc_priv(const arma::mat& Z, const arma::mat& resp, const int& k_tot_max, const int& k1, const int& k2, const double& tol, const double& eps, const int& niter_max, const arma::vec& a_ini, const arma::mat& D_ini, const int& num_lambda_in, const bool& pass_grid, const arma::vec& lambda_grid_in);
+RcppExport SEXP _odpc_sparse_odpc_priv(SEXP ZSEXP, SEXP respSEXP, SEXP k_tot_maxSEXP, SEXP k1SEXP, SEXP k2SEXP, SEXP tolSEXP, SEXP epsSEXP, SEXP niter_maxSEXP, SEXP a_iniSEXP, SEXP D_iniSEXP, SEXP num_lambda_inSEXP, SEXP pass_gridSEXP, SEXP lambda_grid_inSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type resp(respSEXP);
+    Rcpp::traits::input_parameter< const int& >::type k_tot_max(k_tot_maxSEXP);
+    Rcpp::traits::input_parameter< const int& >::type k1(k1SEXP);
+    Rcpp::traits::input_parameter< const int& >::type k2(k2SEXP);
+    Rcpp::traits::input_parameter< const double& >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< const double& >::type eps(epsSEXP);
+    Rcpp::traits::input_parameter< const int& >::type niter_max(niter_maxSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type a_ini(a_iniSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type D_ini(D_iniSEXP);
+    Rcpp::traits::input_parameter< const int& >::type num_lambda_in(num_lambda_inSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type pass_grid(pass_gridSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda_grid_in(lambda_grid_inSEXP);
+    rcpp_result_gen = Rcpp::wrap(sparse_odpc_priv(Z, resp, k_tot_max, k1, k2, tol, eps, niter_max, a_ini, D_ini, num_lambda_in, pass_grid, lambda_grid_in));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_odpc_getMatrixZj0", (DL_FUNC) &_odpc_getMatrixZj0, 4},
     {"_odpc_getMatrixFore", (DL_FUNC) &_odpc_getMatrixFore, 3},
     {"_odpc_getMatrixFitted", (DL_FUNC) &_odpc_getMatrixFitted, 3},
     {"_odpc_getFini_forecast", (DL_FUNC) &_odpc_getFini_forecast, 5},
+    {"_odpc_getMatrixF_sparse_forecast", (DL_FUNC) &_odpc_getMatrixF_sparse_forecast, 5},
     {"_odpc_getMSE", (DL_FUNC) &_odpc_getMSE, 2},
     {"_odpc_odpc_priv", (DL_FUNC) &_odpc_odpc_priv, 11},
     {"_odpc_roll_odpc", (DL_FUNC) &_odpc_roll_odpc, 10},
+    {"_odpc_sparse_odpc_priv", (DL_FUNC) &_odpc_sparse_odpc_priv, 13},
     {NULL, NULL, 0}
 };
 

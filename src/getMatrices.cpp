@@ -13,6 +13,7 @@ arma::mat getMatrixZj(const arma::mat & Z, const int & k_tot, const int & j){
   return(Zj);
 }
 
+// [[Rcpp::export]]
 arma::mat getMatrixZj0(const arma::mat & Z, const int & k1,
                        const int & k_tot, const int & j){
   // Get Zj0 = (Zj, ..., Zj-k1)
@@ -124,4 +125,21 @@ arma::mat getFini_forecast(const arma::mat & Z,
   //First column is filled with ones
   Fini.col(0).fill(1);
   return(Fini);
+}
+
+// [[Rcpp::export]]
+arma::mat getMatrixF_sparse_forecast(const arma::mat & Z, const int & k1,
+                                     const int & k2, const int & k_tot,
+                                     const arma::vec & a){
+  // Get matrix F whose columns are 1 and f_{j} for j = k_tot, ..., k1.
+  // This is just a version of getMatrixF without reference outputs that
+  // is used in cv.sparse_odpc to get a component using an old and new data
+  int N = Z.n_rows;
+  arma::mat outF = zeros(N - k_tot, k2 + 2);
+  for (int h = 0; h <= k2; h++){
+    //first column is already filled with ones
+    outF.col(h + 1) = getMatrixZj0(Z, k1, k_tot, k_tot - h) * a;
+  }
+  outF.col(0).fill(1);
+  return(outF);
 }

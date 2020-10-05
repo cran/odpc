@@ -5,6 +5,7 @@ using namespace arma;
 #include "config.h"
 #include "getMatrices.h"
 #include "updateFunctions.h"
+#include "sparseAux.h"
 
 void getMatrixD(const arma::mat & resp, const arma::mat & F, arma::mat & outD){
   // Get matrix D of loadings and intercepts. First row contains the intercepts (alpha)
@@ -84,6 +85,7 @@ void getVecAMatD_grad(const arma::mat & resp,
                       const arma::mat & ident,
                       const arma::mat & C,
                       const arma::vec & one,
+                      const double & lambda,
                       arma::mat & out_WC,
                       arma::vec & outa,
                       arma::vec & outalpha,
@@ -93,7 +95,6 @@ void getVecAMatD_grad(const arma::mat & resp,
                       arma::sp_mat & W){
   int k = outD.n_rows - 2;
   getMatrixD(resp, matF, outD);
-  // outD = outD + 2 * eta * matF.t() * (resp - matF * outD);
   outB = outD.rows(1, k + 1);
   outalpha = outD.row(0).t();
   vecresp = vectorise(resp) - kron(outalpha, ident) * one;
@@ -101,12 +102,23 @@ void getVecAMatD_grad(const arma::mat & resp,
   out_WC = W * C;
   double L = vecresp.n_elem;
   arma::vec grad = (-2) * (1/L) * out_WC.t() *  (vecresp - out_WC * outa);
-  double step = (0.5 * L) * pow(norm(grad), 2)/pow(norm(out_WC * grad), 2);
+  double step = (0.5 * L) * pow(norm(grad), 2);
+  double denom = pow(norm(out_WC * grad), 2);
+  if (denom > arma::datum::eps){
+    step = step/denom;
+  } else {
+    step = 0;
+  }
   outa = outa - step * grad;
-  // outa = outa + 2 * eta * C.t() * W.t() * vecresp - C.t() * W.t() * W * C * outa;
-  double norma = norm(outa);
-  outa /= norma;
-  for (arma::uword i = 1; i < outD.n_rows; i++){
-    outD.row(i) *= norma;
+  if (lambda < 0){
+    double norma = norm(outa);
+    outa /= norma;
+    for (arma::uword i = 1; i < outD.n_rows; i++){
+      outD.row(i) *= norma;
+    }
+  } else {
+    if (step > 0){
+      Vector_Soft_Thresholding(lambda * step, outa);
+    }
   }
 }
