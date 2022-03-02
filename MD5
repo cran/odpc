@@ -1,6 +1,6 @@
-144706182fe770aa064142743618c428 *DESCRIPTION
+3c758f0f51e95bafd5469c90282661ae *DESCRIPTION
 7e3ff048a319854c7dc94be2ffc9c484 *NAMESPACE
-f0c7804600af3d0024fe399b95feac0d *NEWS
+4a4c17d71ec7080ae51213248dd64e01 *NEWS
 c0845ad319ddff4ce1d1a9a00b0bd24f *R/RcppExports.R
 80222a7af5c19d6a9502e89f251000c7 *R/mainODPC.R
 22e7241cba6af3ab5e05e58a77a47842 *R/methodsODPC.R
@@ -17,8 +17,8 @@ c0274dd413eb33f8e4f1378e7175470c *man/cv.odpc.Rd
 1dc1d27fc24c8019b5b1a88237b5f136 *man/forecast.odpcs.Rd
 7963d0ba30e2d3cc9de9ce1485772bd3 *man/odpc.Rd
 825f6b9dfa62e571628e3b4c78ea3bcc *man/plot.odpc.Rd
-636120de66aa7e4b4e9d048aef8cfd04 *src/Makevars.in
-2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars.win
+3888a39f90bf71b52dfbd02572bbb980 *src/Makevars.in
+d6450c6bfee532dd68b9a61b5b422db4 *src/Makevars.win
 8c78e93fba01cfd97518b916671afc83 *src/RcppExports.cpp
 1b0bbbd1f17035127f7af748776ef2af *src/autoconfig.h.in
 468ec942f1aec8f5c22fe54ce6173c57 *src/autoconfig.win.h
